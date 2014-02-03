@@ -1,0 +1,44 @@
+Some notes on fabric tasks:
+
+== Running ==
+- you need fabric installed
+- you need python-foreman installed
+
+
+== Config ==
+There are some default configuration values defined in the config.py file, you
+can override them using parameters but you have to look at the code to see the
+parameters name and which methods use them.
+
+
+== Using parallel execution ==
+- Use execute ONLY in the most outer task, and it has to be decorated with
+  runs_once. To use another tasks inside other tasks, include the module and
+  call the method directly.
+
+- Make sure that all the tasks that must not be runned in parallel are
+  decorated with serial
+
+
+== Some examples (may be outdated, be warned) ==
+
+- Using host ranges:
+    > fab hostrange:myhost1:15,myhost17 -- echo "\$(hostname)"
+
+- Add packages in parallel:
+    > fab -P hostrange:myhost1:15 yum.pkgs:puppet
+
+- Copy a file to all the hosts (matching the content):
+    > fab -H myhost1,myhost12 file.ensure_content:local.conf,/etc/remote.conf
+
+- Add already existing hosts to foreman, installing puppet if necessary and in
+  parallel mode:
+    > fab -P hostrange:myhost1:35 \
+    .. foreman.setup_host:frm_user=myuser,frm_pass=s3cr3T
+  Note that the frm_user and pass are the user and pass to the foreman web ui.
+
+- Sync all the machines time with default ntp server:
+    > fab hostrange:myhost1:10 system.ntp.sync
+
+To see all the options use fab -l, and to see the possible parameters enter
+inside the code (sorry, on the todo list)

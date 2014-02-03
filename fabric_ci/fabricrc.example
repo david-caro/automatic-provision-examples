@@ -1,0 +1,12 @@
+### General fabric options
+user = ssh_user
+password = ssw_password
+skip_bad_hosts = True
+disable_known_hosts = True
+### Custom options
+#fabfile = ~/Work/git/new_ci-dev-tools/fabric_ci/fabfile.py
+#FOREMAN_USER = dcaro
+#FOREMAN_URL = http://foreman.ovirt.org
+#FOREMAN_PASSWORD = ask
+#TMPDIR = /tmp
+#NTP_SERVER = clock.redhat.com

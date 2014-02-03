@@ -1,0 +1,13 @@
+_fab() {
+    local cur prev opts
+    cur="${COMP_WORDS[COMP_CWORD]}"
+    prev="${COMP_WORDS[COMP_CWORD-1]}"
+    if [[ "$prev" == "-H" ]]; then
+        _all_hosts
+    else
+        options="$(fab --shortlist 2>/dev/null | xargs echo)"
+        COMPREPLY=( $(compgen -W "$options" -- ${cur}) )
+    fi
+}
+
+complete -F _fab fab
